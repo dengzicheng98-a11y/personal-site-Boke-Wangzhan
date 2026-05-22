@@ -1,26 +1,519 @@
 @import "tailwindcss";
 
+/* ── design tokens ────────────────────────────────────────── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --ink: #1d1d1f;
+  --ink-soft: #6e6e73;
+  --ink-faint: #a1a1a6;
+  --bg: #ffffff;
+  --rule: rgba(0, 0, 0, 0.1);
+  --hover-surface: rgba(0, 0, 0, 0.025);
+  --sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display",
+    "Inter", "Helvetica Neue", Helvetica, Arial, "PingFang SC",
+    "Hiragino Sans GB", sans-serif;
+  --mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Monaco,
+    "Roboto Mono", monospace;
+  --pad-v: 160px;
+  --col: 720px;
+  --mondrian-line: #000000;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --ink: #f5f5f7;
+    --ink-soft: #a1a1a6;
+    --ink-faint: #6e6e73;
+    --bg: #000000;
+    --rule: rgba(255, 255, 255, 0.1);
+    --hover-surface: rgba(255, 255, 255, 0.04);
+    --mondrian-line: #ffffff;
   }
 }
 
+/* ── base ─────────────────────────────────────────────────── */
+html,
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow-x: clip;
+  background: var(--bg);
+  color: var(--ink);
+}
+
+body {
+  font-family: var(--sans);
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  min-height: 100vh;
+}
+
+::selection {
+  background: #1d1d1f;
+  color: #ffffff;
+}
+
+@media (prefers-color-scheme: dark) {
+  ::selection {
+    background: #f5f5f7;
+    color: #000;
+  }
+}
+
+/* ── shell ────────────────────────────────────────────────── */
+.page {
+  max-width: var(--col);
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+/* ── nav ──────────────────────────────────────────────────── */
+nav.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 36px;
+  padding-bottom: 36px;
+}
+
+nav.top .brand {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+nav.top ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 28px;
+}
+
+nav.top a {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--ink-soft);
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+nav.top a:hover {
+  opacity: 0.6;
+}
+
+/* ── Mondrian grid (full-bleed background) ────────────────── */
+.bg-grid {
+  position: absolute;
+  pointer-events: none;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
+  /* center and stretch to full viewport width */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+}
+
+.bg-line {
+  position: absolute;
+  background: var(--mondrian-line, #000000);
+}
+
+.bg-fill {
+  position: absolute;
+}
+
+/* Column-edge verticals — 8px outside the text column */
+.bg-v1 {
+  top: 0;
+  bottom: 0;
+  left: calc(50vw - var(--col, 720px) / 2 - 8px);
+  width: 1.5px;
+}
+
+.bg-v2 {
+  top: 0;
+  bottom: 0;
+  right: calc(50vw - var(--col, 720px) / 2 - 8px);
+  width: 1.5px;
+}
+
+/* Hero section structural lines */
+.bg-grid-hero .bg-h1 {
+  top: 80px;
+  left: 0;
+  right: 0;
+  height: 1.5px;
+}
+
+.bg-grid-hero .bg-h2 {
+  bottom: 80px;
+  left: 0;
+  right: 0;
+  height: 1.5px;
+}
+
+/* Red cell right + bottom edges (left margin only) */
+.bg-grid-hero .bg-vr {
+  top: 0;
+  height: 320px;
+  left: min(160px, calc(50vw - var(--col, 720px) / 2 - 8px));
+  width: 1.5px;
+}
+
+.bg-grid-hero .bg-hr {
+  top: 320px;
+  left: 0;
+  width: min(160px, calc(50vw - var(--col, 720px) / 2 - 8px));
+  height: 1.5px;
+}
+
+/* Yellow cell left edge (right margin only) */
+.bg-grid-hero .bg-vy {
+  top: 0;
+  height: 80px;
+  right: min(80px, calc(50vw - var(--col, 720px) / 2 - 8px));
+  width: 1.5px;
+}
+
+/* Blue cell right edge (bottom band) */
+.bg-grid-hero .bg-vb {
+  bottom: 0;
+  height: 80px;
+  width: 1.5px;
+  left: calc(50vw - var(--col, 720px) / 2 + 280px);
+}
+
+/* Mondrian primaries — varied rectangular cells */
+.bg-grid-hero .bg-red {
+  background: #d32f2f;
+  top: 0;
+  left: 0;
+  width: min(160px, calc(50vw - var(--col, 720px) / 2 - 8px));
+  height: 320px;
+}
+
+.bg-grid-hero .bg-yellow {
+  background: #f9a825;
+  top: 0;
+  right: 0;
+  width: min(80px, calc(50vw - var(--col, 720px) / 2 - 8px));
+  height: 80px;
+}
+
+.bg-grid-hero .bg-blue {
+  background: #1e40af;
+  bottom: 0;
+  height: 80px;
+  width: 288px;
+  left: calc(50vw - var(--col, 720px) / 2 - 8px);
+}
+
+/* Writing: date column separator */
+.bg-grid-writing .bg-vdate {
+  top: 0;
+  bottom: 0;
+  right: calc(50vw - var(--col, 720px) / 2 + 90px);
+  width: 1.5px;
+}
+
+@media (max-width: 640px) {
+  .bg-grid {
+    display: none;
+  }
+}
+
+/* ── hero ─────────────────────────────────────────────────── */
+section.hero {
+  padding-top: 120px;
+  padding-bottom: var(--pad-v);
+  position: relative;
+  isolation: isolate;
+}
+
+section.hero > :not(.bg-grid) {
+  position: relative;
+}
+
+.caption {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--ink-faint);
+  letter-spacing: 0.02em;
+  margin: 0 0 40px;
+}
+
+h1.headline {
+  font-family: "New York", "Iowan Old Style", "Charter", Cambria, Georgia,
+    serif;
+  font-size: 64px;
+  line-height: 1.05;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  margin: 0 0 32px;
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+.subtitle {
+  font-size: 16px;
+  line-height: 1.55;
+  font-weight: 400;
+  color: var(--ink-soft);
+  margin: 0;
+  max-width: 560px;
+}
+
+/* ── section block ────────────────────────────────────────── */
+section.block {
+  position: relative;
+  isolation: isolate;
+  padding-top: var(--pad-v);
+  padding-bottom: var(--pad-v);
+}
+
+section.block + section.block {
+  padding-top: 0;
+}
+
+.section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 56px;
+}
+
+.section-head h2 {
+  font-size: 32px;
+  line-height: 1.1;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  margin: 0;
+}
+
+.section-head .meta {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-faint);
+  letter-spacing: 0.02em;
+}
+
+/* ── selected work ────────────────────────────────────────── */
+.work-list {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.work-thumb-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 176px;
+  width: 1.5px;
+  background: var(--mondrian-line, #000);
+  pointer-events: none;
+}
+
+@media (max-width: 640px) {
+  .work-thumb-line {
+    display: none;
+  }
+}
+
+.work-row {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 32px;
+  align-items: start;
+  padding: 28px 16px;
+  margin: 0 -16px;
+  border-radius: 12px;
+  text-decoration: none;
+  color: inherit;
+  border-top: 0.5px solid var(--rule);
+  transition: transform 0.25s cubic-bezier(0.2, 0.7, 0.2, 1),
+    box-shadow 0.25s ease, background-color 0.25s ease;
+}
+
+/* last-of-type because .work-thumb-line div follows the <a> rows */
+.work-row:last-of-type {
+  border-bottom: 0.5px solid var(--rule);
+}
+
+.work-row:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px -8px rgba(0, 0, 0, 0.08),
+    0 2px 6px -2px rgba(0, 0, 0, 0.04);
+  background: var(--hover-surface);
+}
+
+.thumb {
+  width: 160px;
+  aspect-ratio: 4 / 3;
+  border-radius: 6px;
+  background: #f5f5f7;
+  overflow: hidden;
+  position: relative;
+  border: 0.5px solid rgba(0, 0, 0, 0.05);
+}
+
+.thumb svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.work-meta {
+  padding-top: 2px;
+  min-width: 0;
+}
+
+.work-meta h3 {
+  font-size: 16px;
+  line-height: 1.35;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  margin: 0 0 8px;
+  color: var(--ink);
+}
+
+.work-meta p {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  margin: 0 0 14px;
+  max-width: 44ch;
+  text-wrap: pretty;
+}
+
+.work-meta .tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-faint);
+  letter-spacing: 0.02em;
+}
+
+/* ── writing ──────────────────────────────────────────────── */
+.write-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.write-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 22px 0;
+  border-top: 0.5px solid var(--rule);
+  text-decoration: none;
+  color: inherit;
+  transition: padding-left 0.25s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.write-row:last-child {
+  border-bottom: 0.5px solid var(--rule);
+}
+
+.write-row:hover {
+  padding-left: 6px;
+}
+
+.write-row:hover .write-title {
+  opacity: 0.6;
+}
+
+.write-row:hover .write-date {
+  opacity: 0.6;
+}
+
+.write-title {
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: -0.005em;
+  color: var(--ink);
+  transition: opacity 0.2s ease;
+  text-wrap: balance;
+  flex: 1;
+  min-width: 0;
+}
+
+.write-date {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-faint);
+  letter-spacing: 0.02em;
+  flex-shrink: 0;
+  transition: opacity 0.2s ease;
+}
+
+/* ── footer ───────────────────────────────────────────────── */
+footer.foot {
+  padding-top: 120px;
+  padding-bottom: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+footer.foot a,
+footer.foot span {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--ink-soft);
+  text-decoration: none;
+}
+
+footer.foot a {
+  transition: opacity 0.2s ease;
+}
+
+footer.foot a:hover {
+  opacity: 0.6;
+}
+
+footer.foot .group {
+  display: flex;
+  gap: 20px;
+}
+
+/* ── responsive ───────────────────────────────────────────── */
+@media (max-width: 640px) {
+  :root {
+    --pad-v: 100px;
+  }
+
+  .page {
+    padding: 0 24px;
+  }
+
+  h1.headline {
+    font-size: 44px;
+    letter-spacing: -0.03em;
+  }
+
+  .section-head h2 {
+    font-size: 26px;
+  }
+
+  .work-row {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .thumb {
+    width: 100%;
+    max-width: 280px;
+  }
+
+  nav.top ul {
+    gap: 18px;
+  }
 }
