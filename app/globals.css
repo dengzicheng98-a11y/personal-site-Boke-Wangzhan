@@ -213,6 +213,32 @@ nav.top a:hover {
   left: calc(50vw - var(--col, 720px) / 2 - 8px);
 }
 
+/* Selected work color cells */
+.bg-grid-work .bg-red {
+  background: #d32f2f;
+  top: calc(var(--pad-v) + 200px);
+  left: 0;
+  width: min(80px, calc(50vw - var(--col, 720px) / 2 - 8px));
+  height: 110px;
+}
+
+.bg-grid-work .bg-yellow {
+  background: #f9a825;
+  top: calc(var(--pad-v) + 370px);
+  right: 0;
+  width: min(64px, calc(50vw - var(--col, 720px) / 2 - 8px));
+  height: 100px;
+}
+
+/* Writing color cell */
+.bg-grid-writing .bg-blue {
+  background: #1e40af;
+  top: 16px;
+  left: 0;
+  width: min(72px, calc(50vw - var(--col, 720px) / 2 - 8px));
+  height: 104px;
+}
+
 /* Writing: date column separator */
 .bg-grid-writing .bg-vdate {
   top: 0;

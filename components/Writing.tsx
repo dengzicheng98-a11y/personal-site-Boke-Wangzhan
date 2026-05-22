@@ -4,6 +4,7 @@ export function Writing({ posts }: { posts: Post[] }) {
   return (
     <section className="block" id="writing">
       <div className="bg-grid bg-grid-writing" aria-hidden="true">
+        <div className="bg-fill bg-blue" />
         <div className="bg-line bg-v1" />
         <div className="bg-line bg-v2" />
         <div className="bg-line bg-vdate" />

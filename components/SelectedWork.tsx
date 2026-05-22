@@ -5,6 +5,8 @@ export function SelectedWork({ projects }: { projects: Project[] }) {
   return (
     <section className="block" id="work">
       <div className="bg-grid bg-grid-work" aria-hidden="true">
+        <div className="bg-fill bg-red" />
+        <div className="bg-fill bg-yellow" />
         <div className="bg-line bg-v1" />
         <div className="bg-line bg-v2" />
       </div>
