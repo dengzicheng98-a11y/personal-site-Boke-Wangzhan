@@ -10,27 +10,35 @@ export type Project = {
 
 export const projects: Project[] = [
   {
-    title: 'Marginal — a writing surface for thinking with models',
+    title: '小苏哒 — Live2D virtual streamer',
     description:
-      'A long-form editor that treats the model as a margin reader, not a chat partner. Annotations stay quiet until summoned, and never overwrite your prose.',
-    tag: '2026  ·  product, eng  ·  swift, ts',
+      'A Live2D-based virtual streamer with custom lip-sync, GPT-SoVITS voice synthesis, and a multi-source input separation pipeline.',
+    tag: '2026  ·  Python, Live2D, GPT-SoVITS',
     href: '#',
     thumbnail: 'horizon',
   },
   {
-    title: 'Quiet Hours — a focus app that asks nothing of you',
+    title: 'Hermes gateway — MCP integration layer',
     description:
-      'No streaks, no graphs, no rewards. Just a small clock that fades the rest of your screen and stops when you stop. Shipped on macOS and iPadOS.',
-    tag: '2025  ·  solo  ·  swiftui',
+      'An MCP gateway integrating 28 tools across desktop automation, screen recording, and multi-LLM providers — runs as a WSL service with systemd auto-start.',
+    tag: '2026  ·  MCP, Agent, WSL',
     href: '#',
     thumbnail: 'rules',
   },
   {
-    title: 'Field Notes — design tokens for ambient interfaces',
+    title: 'Xiaohongshu auto — Posting automation skill',
     description:
-      'An open kit of motion, type, and color primitives for software that lives at the edge of attention. Used by a handful of small teams building agent-shaped tools.',
-    tag: '2024  ·  open source  ·  figma, css',
+      'Desktop automation for Xiaohongshu publishing, with a clipboard bridge that solved CJK input corruption in keyboard-send APIs.',
+    tag: '2026  ·  PowerShell, Automation',
     href: '#',
     thumbnail: 'dots',
+  },
+  {
+    title: 'Bilingual subtitles — Streaming overlay extension',
+    description:
+      'A Chrome MV3 extension adding AI bilingual subtitles to YouTube, Netflix, Disney+, and HBO Max — handles per-platform fullscreen quirks.',
+    tag: '2026  ·  Chrome MV3, LLM',
+    href: '#',
+    thumbnail: 'horizon',
   },
 ]

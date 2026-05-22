@@ -6,18 +6,13 @@ export type Post = {
 
 export const posts: Post[] = [
   {
-    title: 'On software that knows when to be quiet',
-    date: 'Mar 12 2026',
+    title: 'Live2D 嘴型同步：三次失败的工程日志',
+    date: 'Apr 18 2026',
     href: '#',
   },
   {
-    title: 'Designing for the agent, not the user',
-    date: 'Jan 04 2026',
-    href: '#',
-  },
-  {
-    title: 'The case against the chat box',
-    date: 'Oct 21 2025',
+    title: '为什么我从 OpenClaw 换到 Hermes',
+    date: 'Apr 02 2026',
     href: '#',
   },
 ]
