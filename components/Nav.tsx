@@ -5,6 +5,7 @@ export function Nav() {
       <ul>
         <li><a href="#work">Work</a></li>
         <li><a href="#writing">Writing</a></li>
+        <li><a href="/photos">Photos</a></li>
         <li><a href="#about">About</a></li>
       </ul>
     </nav>

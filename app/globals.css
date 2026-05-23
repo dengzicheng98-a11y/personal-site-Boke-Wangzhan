@@ -543,3 +543,538 @@ footer.foot .group {
     gap: 18px;
   }
 }
+
+/* ── photo essays ─────────────────────────────────────────── */
+
+:root {
+  --serif-cn: "Noto Serif SC", "Source Han Serif SC", Georgia, serif;
+}
+
+/* centered column containers for photos pages */
+.ph-col {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+/* photos index */
+.ph-index-header {
+  padding-top: 80px;
+  padding-bottom: 72px;
+}
+
+.ph-h1 {
+  font-family: "New York", "Iowan Old Style", Charter, Cambria, Georgia, serif;
+  font-size: 52px;
+  line-height: 1.08;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  margin: 0 0 20px;
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+/* essay card list */
+.essays-list {
+  display: flex;
+  flex-direction: column;
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+.essay-card {
+  display: flex;
+  align-items: stretch;
+  text-decoration: none;
+  color: inherit;
+  border-top: 0.5px solid var(--rule);
+  transition: background 0.2s ease;
+}
+
+.essay-card:last-child {
+  border-bottom: 0.5px solid var(--rule);
+}
+
+.essay-card:hover {
+  background: var(--hover-surface);
+}
+
+.essay-card--reversed {
+  flex-direction: row-reverse;
+}
+
+.essay-card-cover {
+  flex: 0 0 40%;
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: #e8e8ea;
+}
+
+.essay-card-img {
+  object-fit: cover;
+}
+
+.essay-card-body {
+  flex: 1;
+  padding: 52px 44px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+}
+
+.essay-title-cn {
+  font-family: var(--serif-cn);
+  font-size: 72px;
+  line-height: 1.05;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0;
+  color: var(--ink);
+}
+
+.essay-subtitle-en {
+  font-size: 15px;
+  color: var(--ink-soft);
+  margin: 0;
+  font-weight: 400;
+}
+
+.essay-cta {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--ink);
+  margin-top: 8px;
+  transition: opacity 0.2s ease;
+}
+
+.essay-card:hover .essay-cta {
+  opacity: 0.5;
+}
+
+/* essay detail hero grid */
+.ph-hero-section {
+  position: relative;
+  isolation: isolate;
+  padding-top: 120px;
+  padding-bottom: 100px;
+}
+
+.bg-grid-ph-hero .bg-h1 {
+  top: 80px;
+  left: 0;
+  right: 0;
+  height: 1.5px;
+}
+
+.bg-grid-ph-hero .bg-h2 {
+  bottom: 80px;
+  left: 0;
+  right: 0;
+  height: 1.5px;
+}
+
+.ph-hero-title {
+  font-family: var(--serif-cn);
+  font-size: 112px;
+  line-height: 0.95;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  margin: 40px 0 40px;
+  color: var(--ink);
+}
+
+.ph-intro {
+  font-size: 17px;
+  line-height: 1.8;
+  color: var(--ink-soft);
+  max-width: 600px;
+  font-family: "PingFang SC", "Microsoft YaHei", var(--sans);
+}
+
+.ph-intro p {
+  margin: 0 0 1.4em;
+}
+
+.ph-intro p:last-child {
+  margin-bottom: 0;
+}
+
+/* mondrian accent cells in gutters (detail pages only) */
+.ph-accent-cell {
+  position: absolute;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.ph-accent-cell-red {
+  background: #d32f2f;
+  top: 64px;
+  left: 0;
+  width: min(56px, calc(50vw - var(--col) / 2 - 8px));
+  height: 88px;
+}
+
+.ph-accent-cell-blue {
+  background: #1e40af;
+  bottom: 100px;
+  right: 0;
+  width: min(44px, calc(50vw - var(--col) / 2 - 8px));
+  height: 112px;
+}
+
+/* magazine layout */
+.ph-magazine {
+  padding-top: 80px;
+  padding-bottom: 120px;
+}
+
+.ph-block {
+  margin-bottom: 100px;
+}
+
+.ph-block:last-child {
+  margin-bottom: 0;
+}
+
+/* full-bleed: breaks out of any container */
+.ph-full-bleed {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #e8e8ea;
+}
+
+/* side-by-side pair */
+.ph-pair-wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 32px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.ph-pair-item {
+  position: relative;
+  aspect-ratio: 2 / 3;
+  overflow: hidden;
+  background: #e8e8ea;
+}
+
+/* single centered */
+.ph-single-wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+.ph-single-item {
+  position: relative;
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  background: #e8e8ea;
+  width: 100%;
+}
+
+/* triptych */
+.ph-triptych-wrap {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 32px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.ph-triptych-item {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: #e8e8ea;
+}
+
+/* offset photo with caption */
+.ph-offset-wrap {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 32px;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 48px;
+  align-items: center;
+}
+
+.ph-offset-caption {
+  font-family: var(--serif-cn);
+  font-style: italic;
+  font-size: 18px;
+  line-height: 1.7;
+  color: var(--ink-soft);
+  margin: 0;
+}
+
+.ph-offset-img {
+  position: relative;
+  aspect-ratio: 2 / 3;
+  overflow: hidden;
+  background: #e8e8ea;
+}
+
+/* stacked pair */
+.ph-stacked-wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ph-stacked-item {
+  position: relative;
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  background: #e8e8ea;
+  width: 100%;
+}
+
+/* essay navigation footer */
+.ph-essay-nav {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 64px 32px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 0.5px solid var(--rule);
+}
+
+.ph-essay-nav a {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-soft);
+  text-decoration: none;
+  letter-spacing: 0.02em;
+  transition: opacity 0.2s ease;
+}
+
+.ph-essay-nav a:hover {
+  opacity: 0.6;
+}
+
+@media (max-width: 640px) {
+  .ph-hero-title {
+    font-size: 72px;
+  }
+
+  .essay-title-cn {
+    font-size: 48px;
+  }
+
+  .essay-card {
+    flex-direction: column !important;
+  }
+
+  .essay-card-cover {
+    flex: 0 0 auto;
+    width: 100%;
+    aspect-ratio: 3 / 2;
+  }
+
+  .essay-card-body {
+    padding: 32px 24px;
+  }
+
+  .ph-pair-wrap {
+    grid-template-columns: 1fr;
+  }
+
+  .ph-triptych-wrap {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .ph-offset-wrap {
+    grid-template-columns: 1fr;
+  }
+
+  .ph-offset-caption {
+    order: 2;
+  }
+
+  .ph-offset-img {
+    order: 1;
+  }
+
+  .ph-accent-cell {
+    display: none;
+  }
+}
+
+/* ── natural-sizing photo containers ─────────────────────────────────
+   These replace the fill+object-cover approach.
+   Container height is driven by the image's own ratio — no forced crop.
+   ─────────────────────────────────────────────────────────────────── */
+
+/* Generic natural photo wrapper */
+.ph-photo {
+  overflow: hidden;
+  background: #e8e8ea;
+}
+
+/* Full-bleed landscape: 100vw wide, height follows image ratio */
+.ph-full-land {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  overflow: hidden;
+  background: #e8e8ea;
+}
+
+/* Full-bleed portrait outer wrapper: dark bg, centers the portrait frame */
+.ph-full-port {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  background: #111111;
+}
+
+/* Portrait frame: height capped at 90vh, width from inline aspect-ratio */
+.ph-portrait-frame {
+  position: relative;
+  height: 90vh;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+/* Pair grid: top-align so portrait+landscape mix stagger naturally */
+.ph-pair-grid {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 32px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  align-items: start;
+}
+
+/* Triptych grid: top-align */
+.ph-trip-grid {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 32px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  align-items: start;
+}
+
+@media (max-width: 640px) {
+  .ph-pair-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ph-trip-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .ph-portrait-frame {
+    height: 70vh;
+  }
+}
+
+/* ── photo layout v2 ──────────────────────────────────────────────────────────
+   New orientation-aware layout system. Each class drives one block type.
+   Old ph-full-bleed / ph-pair-wrap / ph-stacked-wrap etc. remain but are unused.
+   ─────────────────────────────────────────────────────────────────────────── */
+
+/* Feature: 100vw landscape, visual accent beat */
+.ph-layout-feature {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Standard landscape: wide but capped, centered */
+.ph-layout-land {
+  width: min(96vw, 1600px);
+  margin: 0 auto;
+}
+
+/* Portrait single: constrained width, centered */
+.ph-layout-port {
+  display: flex;
+  justify-content: center;
+  padding: 0 16px;
+}
+
+.ph-layout-port .ph-photo {
+  width: min(58vw, 720px);
+  max-width: 100%;
+}
+
+/* Pair of landscapes: ~48vw each, top-aligned */
+.ph-layout-pair-land {
+  width: min(96vw, 1600px);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  align-items: start;
+}
+
+/* Pair of portraits: ~32vw each, top-aligned */
+.ph-layout-pair-port {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  padding: 0 16px;
+}
+
+.ph-layout-pair-port .ph-photo {
+  width: min(32vw, 420px);
+  flex-shrink: 0;
+}
+
+/* Triptych: 3 landscapes, ~31vw each */
+.ph-layout-trip {
+  width: min(96vw, 1600px);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  align-items: start;
+}
+
+@media (max-width: 640px) {
+  .ph-layout-pair-land {
+    grid-template-columns: 1fr;
+  }
+
+  .ph-layout-pair-port .ph-photo {
+    width: calc(46vw - 8px);
+  }
+
+  .ph-layout-pair-port {
+    gap: 8px;
+  }
+
+  .ph-layout-trip {
+    grid-template-columns: 1fr;
+  }
+
+  .ph-layout-port .ph-photo {
+    width: 88vw;
+  }
+}

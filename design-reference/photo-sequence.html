@@ -1,0 +1,459 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<title>Photo Essay — Sequence v2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FAFAF7;
+    --ink:#111111;
+    --ink-soft:#5b5b58;
+    --rule:#1a1a1a;
+    --hair:rgba(17,17,17,.18);
+    --plate-bg:#ECEAE2;
+    --plate-bg-2:#E3E0D6;
+    --plate-bg-3:#D8D5CA;
+    --mondrian-red:#D32F2F;
+    --mondrian-yellow:#F9A825;
+    --mondrian-blue:#1E40AF;
+    --serif:"EB Garamond", "Times New Roman", serif;
+    --mono:"JetBrains Mono", ui-monospace, Menlo, monospace;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--paper);color:var(--ink);font-family:var(--serif);-webkit-font-smoothing:antialiased}
+  body{padding:120px 0 200px}
+
+  /* ——————————————— SECTION OPENER ——————————————— */
+  .opener{
+    max-width:1600px;width:96vw;margin:0 auto 140px;
+    display:grid;grid-template-columns:1fr auto;align-items:end;gap:32px;
+    padding-bottom:24px;border-bottom:1px solid var(--rule);
+  }
+  .opener .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:18px;display:flex;gap:14px;align-items:center}
+  .opener .eyebrow .sw{display:inline-block;width:10px;height:10px}
+  .opener h1{font-family:var(--serif);font-weight:500;font-size:clamp(48px,7vw,110px);line-height:.98;letter-spacing:-.02em;margin:0;text-wrap:balance}
+  .opener h1 em{font-style:italic;font-weight:500;color:var(--ink-soft)}
+  .opener .meta{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-align:right;color:var(--ink-soft);line-height:1.7;white-space:nowrap}
+  .opener .meta b{color:var(--ink);font-weight:500}
+
+  /* ——————————————— RULES STRIP ——————————————— */
+  .rulestrip{
+    width:min(96vw,1600px);margin:0 auto 120px;
+    display:grid;grid-template-columns:repeat(5, 1fr);gap:0;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;color:var(--ink);
+  }
+  .rulestrip > div{padding:18px 18px;border-right:1px solid var(--hair);line-height:1.55}
+  .rulestrip > div:last-child{border-right:0}
+  .rulestrip h5{font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft);margin:0 0 10px;font-weight:500;display:flex;align-items:center;gap:8px}
+  .rulestrip h5 i{display:inline-block;width:8px;height:8px;background:var(--ink)}
+  .rulestrip h5 i.r{background:var(--mondrian-red)}
+  .rulestrip h5 i.y{background:var(--mondrian-yellow)}
+  .rulestrip h5 i.b{background:var(--mondrian-blue)}
+  .rulestrip code{font-family:var(--mono);background:#EFEDE5;padding:1px 5px;color:var(--ink)}
+
+  /* ——————————————— BLOCK SCAFFOLDING ——————————————— */
+  .block{margin:0 auto;padding:0;position:relative}
+  .block + .block{margin-top:120px}
+  .block.tight + .block{margin-top:100px}
+  .block.loose + .block{margin-top:140px}
+
+  /* Plate label */
+  .plate{
+    position:absolute;left:max(24px, calc((100vw - 1600px)/2 - 8px));top:6px;
+    font-family:var(--mono);font-size:10px;letter-spacing:.16em;color:var(--ink-soft);
+    text-transform:uppercase;display:flex;align-items:center;gap:8px;
+  }
+  .plate .dot{width:7px;height:7px;background:var(--ink);display:inline-block}
+  .plate .dot.red{background:var(--mondrian-red)}
+  .plate .dot.yel{background:var(--mondrian-yellow)}
+  .plate .dot.blu{background:var(--mondrian-blue)}
+  .plate b{color:var(--ink);font-weight:500}
+  .plate .rule-flag{
+    margin-left:14px;padding:2px 8px;border:1px solid var(--ink);color:var(--ink);
+    font-size:9px;letter-spacing:.18em;
+  }
+  .plate .rule-flag.forced{background:var(--ink);color:var(--paper)}
+  .plate .rule-flag.accent{border-color:var(--mondrian-red);color:var(--mondrian-red)}
+
+  /* Horiz streak counter — sits at the right edge of horizontal blocks */
+  .streak{
+    position:absolute;right:max(24px, calc((100vw - 1600px)/2 - 8px));top:6px;
+    font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:var(--ink-soft);
+    text-transform:uppercase;display:flex;gap:14px;align-items:center;
+  }
+  .streak .pips{display:inline-flex;gap:3px}
+  .streak .pips i{display:inline-block;width:8px;height:8px;border:1px solid var(--ink)}
+  .streak .pips i.on{background:var(--ink)}
+  .streak .pips i.warn{background:var(--mondrian-red);border-color:var(--mondrian-red)}
+  .streak .reset{color:var(--ink);font-weight:500;border:1px solid var(--ink);padding:2px 6px;font-size:9px}
+
+  /* Caption */
+  .cap{
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;color:var(--ink-soft);line-height:1.6;
+    margin-top:14px;display:flex;gap:18px;align-items:baseline;
+  }
+  .cap .n{color:var(--ink);font-weight:500}
+  .cap .ar{color:var(--ink);font-weight:500;font-size:10px;letter-spacing:.12em}
+  .cap .loc{margin-left:auto;text-transform:uppercase;letter-spacing:.14em}
+
+  /* ——————————————— PLACEHOLDER (aspect-aware) ——————————————— */
+  .ph{
+    position:relative;display:block;width:100%;
+    aspect-ratio: var(--ar, 3 / 2);
+    background:
+      repeating-linear-gradient(135deg, rgba(17,17,17,.045) 0 1px, transparent 1px 9px),
+      var(--plate-bg);
+    overflow:hidden;
+  }
+  .ph.v2{background:
+      repeating-linear-gradient(135deg, rgba(17,17,17,.05) 0 1px, transparent 1px 11px),
+      var(--plate-bg-2);}
+  .ph.v3{background:
+      repeating-linear-gradient(135deg, rgba(17,17,17,.06) 0 1px, transparent 1px 13px),
+      var(--plate-bg-3);}
+  .ph .tag{
+    position:absolute;left:14px;top:14px;font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;
+    color:rgba(17,17,17,.6);text-transform:uppercase;
+  }
+  .ph .tag-r{
+    position:absolute;right:14px;bottom:14px;font-family:var(--mono);font-size:9px;letter-spacing:.14em;
+    color:rgba(17,17,17,.5);text-transform:uppercase;
+  }
+  .ph .frame{position:absolute;inset:0;border:1px solid rgba(17,17,17,.08)}
+
+  /* ——————————————— BLOCK LAYOUTS ——————————————— */
+
+  /* single-h: standard horizontal (1.45–1.95). min(96vw, 1600px) */
+  .b-single-h{width:min(96vw,1600px)}
+
+  /* single-v: vertical (~0.67). min(50vw, 640px), intentional whitespace */
+  .b-single-v{width:min(50vw,640px)}
+  .b-single-v .cap{justify-content:space-between}
+
+  /* feature-wide: aspect > 1.95. Full bleed, standalone — always */
+  .b-feature-wide{width:100vw;margin-left:calc(50% - 50vw)}
+  .b-feature-wide .meta-row{
+    width:min(96vw,1600px);margin:14px auto 0;display:flex;justify-content:space-between;
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;color:var(--ink-soft);
+  }
+  .b-feature-wide .meta-row b{color:var(--ink);font-weight:500}
+  .b-feature-wide .plate{left:24px}
+
+  /* feature-tall: aspect < 1.6. Centered min(75vw, 1200px), standalone */
+  .b-feature-tall{width:min(75vw,1200px)}
+  .b-feature-tall .cap{margin-top:14px}
+
+  /* diptych-h: two ~3:2 horizontals (allowed aspect 1.45–1.95 each, but balanced) */
+  .b-diptych-h{width:min(96vw,1600px);display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .b-diptych-h .cap{margin-top:12px}
+
+  /* triptych-h: three STANDARD 16:9 only — aspect 1.7–1.85 */
+  .b-triptych-h{width:min(96vw,1600px);display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+  .b-triptych-h .cap{margin-top:12px;font-size:10px}
+
+  /* Offset vertical + serif italic pull-quote (unchanged) */
+  .b-quote{
+    width:min(96vw,1600px);display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;
+  }
+  .b-quote .img{width:min(34vw,480px);justify-self:end}
+  .b-quote .img .ph{--ar: 2 / 3}
+  .b-quote .text{padding-right:40px;max-width:520px}
+  .b-quote .text .kicker{
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--ink-soft);margin-bottom:28px;display:flex;align-items:center;gap:10px;
+  }
+  .b-quote .text .kicker .bar{width:36px;height:1px;background:var(--ink)}
+  .b-quote .text blockquote{
+    margin:0;font-family:var(--serif);font-style:italic;font-weight:400;
+    font-size:clamp(28px,2.6vw,42px);line-height:1.18;letter-spacing:-.01em;color:var(--ink);
+    text-wrap:pretty;
+  }
+  .b-quote .text blockquote .drop{font-size:1.4em;line-height:0;vertical-align:-0.05em;margin-right:.04em;color:var(--mondrian-red);font-style:normal}
+  .b-quote .text cite{
+    display:block;margin-top:28px;font-style:normal;font-family:var(--mono);
+    font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);
+  }
+  .b-quote.flip{direction:rtl}
+  .b-quote.flip > *{direction:ltr}
+  .b-quote.flip .img{justify-self:start}
+  .b-quote.flip .text{padding-right:0;padding-left:40px}
+
+  /* Folio rule */
+  .folio{
+    width:min(96vw,1600px);margin:0 auto;display:flex;justify-content:space-between;
+    font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft);
+    padding:14px 0;border-top:1px solid var(--hair);
+  }
+  .folio b{color:var(--ink);font-weight:500}
+  .folio .swatches{display:flex;gap:6px;align-items:center}
+  .folio .swatches i{display:inline-block;width:10px;height:10px}
+
+  /* Colophon */
+  .colophon{
+    width:min(96vw,1600px);margin:160px auto 0;padding-top:40px;border-top:1px solid var(--rule);
+    display:grid;grid-template-columns:2fr 1fr 1fr;gap:40px;
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;color:var(--ink-soft);line-height:1.7;
+  }
+  .colophon h4{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink);margin:0 0 12px;font-weight:500}
+  .colophon .end{display:flex;align-items:center;gap:10px}
+  .colophon .end i{display:inline-block;width:12px;height:12px;background:var(--ink)}
+</style>
+</head>
+<body>
+
+<!-- ——————————————— OPENER ——————————————— -->
+<header class="opener">
+  <div>
+    <div class="eyebrow">
+      <span class="sw" style="background:var(--mondrian-red)"></span>
+      <span class="sw" style="background:var(--mondrian-yellow)"></span>
+      <span class="sw" style="background:var(--mondrian-blue)"></span>
+      <span>Plates 01 — 15 · Sequence v2 · aspect-aware</span>
+    </div>
+    <h1>Salt, Concrete, <em>and the Long Afternoon</em></h1>
+  </div>
+  <div class="meta">
+    <b>Photography</b> &nbsp;—&nbsp; A. Marchetti<br>
+    <b>Edit</b> &nbsp;—&nbsp; The Studio<br>
+    <b>Layout</b> &nbsp;—&nbsp; Rules v2 / aspect-aware
+  </div>
+</header>
+
+<!-- ——————————————— RULES STRIP (the system, made visible) ——————————————— -->
+<section class="rulestrip">
+  <div>
+    <h5><i></i>Rule 01 — feature-wide</h5>
+    aspect <code>&gt; 1.95</code> → 100vw, standalone. Never paired or trio'd. Visual accent.
+  </div>
+  <div>
+    <h5><i class="r"></i>Rule 02 — feature-tall</h5>
+    aspect <code>&lt; 1.60</code> → centered <code>min(75vw,1200px)</code>, standalone. Would dwarf its neighbours in a trio.
+  </div>
+  <div>
+    <h5><i class="y"></i>Rule 03 — triptych</h5>
+    only aspect <code>1.70 – 1.85</code> qualifies. Three frames, equal height, no exceptions.
+  </div>
+  <div>
+    <h5><i class="b"></i>Rule 04 — pair-port</h5>
+    diptych-vertical: <s>deprecated</s>. Real shoots don't pair like that. Removed from the system.
+  </div>
+  <div>
+    <h5><i></i>Rule 05 — long-tail break</h5>
+    horiz-streak ≥ 5 → next block forced to <b>feature-wide</b>. Counter resets on any vertical / quote.
+  </div>
+</section>
+
+<!-- =========================================================
+     SEQUENCE — horiz-streak counter shown in top-right of horizontals
+     ========================================================= -->
+
+<!-- 01 — single-h (3:2, 1.50). count: 1 -->
+<section class="block b-single-h">
+  <div class="plate"><span class="dot"></span><b>Plate 01</b> &nbsp;·&nbsp; single-h &nbsp;·&nbsp; <code style="font-family:var(--mono);font-size:10px">aspect 1.50</code></div>
+  <div class="streak">Horiz streak <span class="pips"><i class="on"></i><i></i><i></i><i></i><i></i></span> 1/5</div>
+  <div class="ph" style="--ar: 3 / 2"><span class="tag">3:2 — horizontal</span><span class="tag-r">A 1.50</span><span class="frame"></span></div>
+  <div class="cap"><span class="n">01</span><span class="ar">1.50</span><span>The pier at first light, before the wind picked up the dust.</span><span class="loc">Trapani, 06:14</span></div>
+</section>
+
+<!-- 02 — feature-tall (4:3, 1.33). RULE 02 fires. count: still horizontal but standalone — count++ → 2 -->
+<section class="block b-feature-tall">
+  <div class="plate">
+    <span class="dot red"></span><b>Plate 02</b> &nbsp;·&nbsp; feature-tall &nbsp;·&nbsp; <code style="font-family:var(--mono);font-size:10px">aspect 1.33</code>
+    <span class="rule-flag accent">Rule 02 — &lt; 1.60, standalone</span>
+  </div>
+  <div class="streak">Horiz streak <span class="pips"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span> 2/5</div>
+  <div class="ph v2" style="--ar: 4 / 3"><span class="tag">4:3 — feature-tall</span><span class="tag-r">A 1.33</span><span class="frame"></span></div>
+  <div class="cap"><span class="n">02</span><span class="ar">1.33</span><span>Boatyard, the older half. A 4:3 frame — too tall to sit in a trio without dwarfing its neighbours, so it sits alone at 75vw.</span><span class="loc">Trapani</span></div>
+</section>
+
+<!-- 03 — single-v. RESETS horiz counter. -->
+<section class="block b-single-v">
+  <div class="plate"><span class="dot"></span><b>Plate 03</b> &nbsp;·&nbsp; single-v &nbsp;·&nbsp; <code style="font-family:var(--mono);font-size:10px">aspect 0.67</code></div>
+  <div class="streak"><span class="reset">RESET</span> Horiz streak <span class="pips"><i></i><i></i><i></i><i></i><i></i></span> 0/5</div>
+  <div class="ph v3" style="--ar: 2 / 3"><span class="tag">2:3 — vertical</span><span class="tag-r">A 0.67</span><span class="frame"></span></div>
+  <div class="cap"><span class="n">03</span><span class="ar">0.67</span><span>A door, half-painted.</span><span class="loc">Marsala</span></div>
+</section>
+
+<!-- 04 — diptych-h (1.50 + 1.50). count: 2 -->
+<section class="block b-diptych-h">
+  <div class="plate"><span class="dot"></span><b>Plate 04</b> &nbsp;·&nbsp; diptych-h &nbsp;·&nbsp; <code style="font-family:var(--mono);font-size:10px">aspect 1.50 · 1.50</code></div>
+  <div class="streak">Horiz streak <span class="pips"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span> 2/5</div>
+  <div>
+    <div class="ph" style="--ar: 3 / 2"><span class="tag">3:2 — A</span><span class="tag-r">A 1.50</span><span class="frame"></span></div>
+    <div class="cap"><span class="n">04a</span><span class="ar">1.50</span><span>Window, interior.</span></div>
+  </div>
+  <div>
+    <div class="ph v2" style="--ar: 3 / 2"><span class="tag">3:2 — B</span><span class="tag-r">A 1.50</span><span class="frame"></span></div>
+    <div class="cap"><span class="n">04b</span><span class="ar">1.50</span><span>Window, exterior, same hour.</span></div>
+  </div>
+</section>
+
+<!-- 05 — triptych-h (1.78 × 3). RULE 03. count: 5 → NEXT FORCED feature-wide -->
+<section class="block b-triptych-h">
+  <div class="plate">
+    <span class="dot yel"></span><b>Plate 05</b> &nbsp;·&nbsp; triptych-h &nbsp;·&nbsp; <code style="font-family:var(--mono);font-size:10px">aspect 1.78 × 3</code>
+    <span class="rule-flag">Rule 03 — 1.70–1.85 only</span>
+  </div>
+  <div class="streak">Horiz streak <span class="pips"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="warn"></i></span> 5/5 · trigger</div>
+  <div>
+    <div class="ph" style="--ar: 16 / 9"><span class="tag">16:9 — i</span><span class="tag-r">A 1.78</span><span class="frame"></span></div>
+    <div class="cap"><span class="n">05 · i</span><span class="ar">1.78</span><span>Salt pan, dry.</span></div>
+  </div>
+  <div>
+    <div class="ph v2" style="--ar: 16 / 9"><span class="tag">16:9 — ii</span><span class="tag-r">A 1.78</span><span class="frame"></span></div>
+    <div class="cap"><span class="n">05 · ii</span><span class="ar">1.78</span><span>Salt pan, flooded.</span></div>
+  </div>
+  <div>
+    <div class="ph v3" style="--ar: 16 / 9"><span class="tag">16:9 — iii</span><span class="tag-r">A 1.78</span><span class="frame"></span></div>
+    <div class="cap"><span class="n">05 · iii</span><span class="ar">1.78</span><span>Salt pan, harvest.</span></div>
+  </div>
+</section>
+
+<!-- Folio rule -->
+<div class="folio">
+  <span>Sequence I &nbsp;/&nbsp; <b>05 of 15</b></span>
+  <span class="swatches">
+    <i style="background:var(--mondrian-red)"></i>
+    <i style="background:var(--mondrian-yellow)"></i>
+    <i style="background:var(--mondrian-blue)"></i>
+  </span>
+  <span>Salt, Concrete &amp; The Long Afternoon</span>
+</div>
+
+<!-- 06 — feature-wide FORCED (Rule 05 long-tail break). count RESET -->
+<section class="block b-feature-wide">
+  <div class="plate">
+    <span class="dot blu"></span><b>Plate 06</b> &nbsp;·&nbsp; feature-wide &nbsp;·&nbsp; <code style="font-family:var(--mono);font-size:10px">aspect 2.35</code>
+    <span class="rule-flag forced">Rule 05 — forced break</span>
+  </div>
+  <div class="streak" style="right:24px"><span class="reset" style="background:var(--ink);color:var(--paper);border-color:var(--ink)">FORCED · RESET</span> Horiz streak <span class="pips"><i></i><i></i><i></i><i></i><i></i></span> 0/5</div>
+  <div class="ph" style="--ar: 2.35 / 1"><span class="tag">2.35:1 — full bleed</span><span class="tag-r">A 2.35</span><span class="frame"></span></div>
+  <div class="meta-row">
+    <span><b>06</b> &nbsp; The road south of Mazara, two hours after noon.</span>
+    <span>F/8 · 1/500 · ISO 200 &nbsp; · &nbsp; A 2.35</span>
+  </div>
+</section>
+
+<!-- 07 — quote (offset vertical + italic). counter at 0 -->
+<section class="block b-quote">
+  <div class="img">
+    <div class="ph"><span class="tag">2:3 — offset</span><span class="tag-r">A 0.67</span><span class="frame"></span></div>
+    <div class="cap"><span class="n">07</span><span class="ar">0.67</span><span class="loc">Selinunte</span></div>
+  </div>
+  <div class="text">
+    <div class="kicker"><span class="bar"></span><span>From the field notes</span></div>
+    <blockquote>
+      <span class="drop">“</span>The afternoon does not pass here — it <em>accumulates</em>, in the cracks of the wall, in the salt on your forearm, in the long pause before anyone answers a question.”
+    </blockquote>
+    <cite>— A.M., Day 14, on the bus back to Palermo</cite>
+  </div>
+</section>
+
+<!-- 08 — single-h (1.50). count: 1 -->
+<section class="block b-single-h">
+  <div class="plate"><span class="dot"></span><b>Plate 08</b> &nbsp;·&nbsp; single-h &nbsp;·&nbsp; <code style="font-family:var(--mono);font-size:10px">aspect 1.50</code></div>
+  <div class="streak">Horiz streak <span class="pips"><i class="on"></i><i></i><i></i><i></i><i></i></span> 1/5</div>
+  <div class="ph v2" style="--ar: 3 / 2"><span class="tag">3:2 — horizontal</span><span class="tag-r">A 1.50</span><span class="frame"></span></div>
+  <div class="cap"><span class="n">08</span><span class="ar">1.50</span><span>The square at three, emptied by the heat.</span><span class="loc">Castelvetrano</span></div>
+</section>
+
+<!-- 09 — single-v. RESET -->
+<section class="block b-single-v">
+  <div class="plate"><span class="dot yel"></span><b>Plate 09</b> &nbsp;·&nbsp; single-v &nbsp;·&nbsp; <code style="font-family:var(--mono);font-size:10px">aspect 0.67</code></div>
+  <div class="streak"><span class="reset">RESET</span> Horiz streak <span class="pips"><i></i><i></i><i></i><i></i><i></i></span> 0/5</div>
+  <div class="ph v3" style="--ar: 2 / 3"><span class="tag">2:3 — vertical</span><span class="tag-r">A 0.67</span><span class="frame"></span></div>
+  <div class="cap"><span class="n">09</span><span class="ar">0.67</span><span>A laundry line, mid-summer.</span><span class="loc">Sciacca</span></div>
+</section>
+
+<!-- 10 — feature-tall (5:4 = 1.25). RULE 02. count: 1 -->
+<section class="block b-feature-tall">
+  <div class="plate">
+    <span class="dot red"></span><b>Plate 10</b> &nbsp;·&nbsp; feature-tall &nbsp;·&nbsp; <code style="font-family:var(--mono);font-size:10px">aspect 1.25</code>
+    <span class="rule-flag accent">Rule 02 — &lt; 1.60, standalone</span>
+  </div>
+  <div class="streak">Horiz streak <span class="pips"><i class="on"></i><i></i><i></i><i></i><i></i></span> 1/5</div>
+  <div class="ph" style="--ar: 5 / 4"><span class="tag">5:4 — feature-tall</span><span class="tag-r">A 1.25</span><span class="frame"></span></div>
+  <div class="cap"><span class="n">10</span><span class="ar">1.25</span><span>A wall, four colours, three repaints visible. The 5:4 aspect would tower beside any 16:9, so it sits alone — centered, contained.</span><span class="loc">Sciacca</span></div>
+</section>
+
+<!-- 11 — single-h (1.50). count: 2 -->
+<section class="block b-single-h">
+  <div class="plate"><span class="dot"></span><b>Plate 11</b> &nbsp;·&nbsp; single-h &nbsp;·&nbsp; <code style="font-family:var(--mono);font-size:10px">aspect 1.55</code></div>
+  <div class="streak">Horiz streak <span class="pips"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span> 2/5</div>
+  <div class="ph v3" style="--ar: 1.55 / 1"><span class="tag">~3:2 — horizontal</span><span class="tag-r">A 1.55</span><span class="frame"></span></div>
+  <div class="cap"><span class="n">11</span><span class="ar">1.55</span><span>The ferry waiting room. Two clocks, neither correct.</span><span class="loc">Trapani port</span></div>
+</section>
+
+<!-- 12 — diptych-h. count: 4 -->
+<section class="block b-diptych-h">
+  <div class="plate"><span class="dot"></span><b>Plate 12</b> &nbsp;·&nbsp; diptych-h &nbsp;·&nbsp; <code style="font-family:var(--mono);font-size:10px">aspect 1.50 · 1.50</code></div>
+  <div class="streak">Horiz streak <span class="pips"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span> 4/5</div>
+  <div>
+    <div class="ph" style="--ar: 3 / 2"><span class="tag">3:2 — A</span><span class="tag-r">A 1.50</span><span class="frame"></span></div>
+    <div class="cap"><span class="n">12a</span><span class="ar">1.50</span><span>Concrete, freshly poured.</span></div>
+  </div>
+  <div>
+    <div class="ph v2" style="--ar: 3 / 2"><span class="tag">3:2 — B</span><span class="tag-r">A 1.50</span><span class="frame"></span></div>
+    <div class="cap"><span class="n">12b</span><span class="ar">1.50</span><span>Concrete, forty years on.</span></div>
+  </div>
+</section>
+
+<!-- 13 — single-h (1.50). count: 5 → trigger -->
+<section class="block b-single-h">
+  <div class="plate"><span class="dot"></span><b>Plate 13</b> &nbsp;·&nbsp; single-h &nbsp;·&nbsp; <code style="font-family:var(--mono);font-size:10px">aspect 1.50</code></div>
+  <div class="streak">Horiz streak <span class="pips"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="warn"></i></span> 5/5 · trigger</div>
+  <div class="ph" style="--ar: 3 / 2"><span class="tag">3:2 — horizontal</span><span class="tag-r">A 1.50</span><span class="frame"></span></div>
+  <div class="cap"><span class="n">13</span><span class="ar">1.50</span><span>Hands, kneading. The fifth horizontal frame in a row.</span><span class="loc">Erice</span></div>
+</section>
+
+<!-- 14 — feature-wide FORCED (long-tail rule fires) -->
+<section class="block b-feature-wide">
+  <div class="plate">
+    <span class="dot red"></span><b>Plate 14</b> &nbsp;·&nbsp; feature-wide &nbsp;·&nbsp; <code style="font-family:var(--mono);font-size:10px">aspect 2.39</code>
+    <span class="rule-flag forced">Rule 05 — forced break</span>
+  </div>
+  <div class="streak" style="right:24px"><span class="reset" style="background:var(--ink);color:var(--paper);border-color:var(--ink)">FORCED · RESET</span> Horiz streak <span class="pips"><i></i><i></i><i></i><i></i><i></i></span> 0/5</div>
+  <div class="ph v2" style="--ar: 2.39 / 1"><span class="tag">2.39:1 — full bleed</span><span class="tag-r">A 2.39</span><span class="frame"></span></div>
+  <div class="meta-row">
+    <span><b>14</b> &nbsp; Storm front off the Aegadian Islands, 18:42.</span>
+    <span>F/5.6 · 1/1000 · ISO 400 &nbsp; · &nbsp; A 2.39</span>
+  </div>
+</section>
+
+<!-- 15 — quote closer (flipped) -->
+<section class="block b-quote flip">
+  <div class="img">
+    <div class="ph v2"><span class="tag">2:3 — offset</span><span class="tag-r">A 0.67</span><span class="frame"></span></div>
+    <div class="cap"><span class="n">15</span><span class="ar">0.67</span><span class="loc">Palermo</span></div>
+  </div>
+  <div class="text">
+    <div class="kicker"><span class="bar"></span><span>Closing note</span></div>
+    <blockquote>
+      <span class="drop">“</span>What I came for was the light. What I leave with is the <em>silence between the noises</em> — the dog, the moped, the shutter, the dog again.”
+    </blockquote>
+    <cite>— A.M., last evening, Vucciria market</cite>
+  </div>
+</section>
+
+<!-- ——————————————— COLOPHON ——————————————— -->
+<footer class="colophon">
+  <div>
+    <h4>On the rules</h4>
+    The layout system is aspect-aware: every block reads its photo's aspect ratio and routes it to the appropriate template. feature-wide and feature-tall are escape hatches — outliers don't get squeezed into a trio just to fill a row. The long-tail break keeps the eye from drowning in a string of similar frames.
+  </div>
+  <div>
+    <h4>Typography</h4>
+    EB Garamond &nbsp;/&nbsp; serif, roman + italic<br>
+    JetBrains Mono &nbsp;/&nbsp; mono, captions &amp; plates
+  </div>
+  <div>
+    <h4>End</h4>
+    <span class="end"><i></i> Sequence ends. 15 plates · 0 pair-port blocks.</span>
+  </div>
+</footer>
+
+</body>
+</html>
