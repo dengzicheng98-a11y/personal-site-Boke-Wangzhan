@@ -993,6 +993,81 @@ footer.foot .group {
   }
 }
 
+/* ── mobile Mondrian grid ─────────────────────────────────────────────────────
+   Problem 1: @media (max-width: 640px) above sets .bg-grid { display: none }.
+   Problem 2: color-cell widths use calc(50vw - 360px - 8px), which goes
+              negative at ≤736px — min() clamps to 0, so cells vanish.
+   Fix: re-enable the grid and assign fixed, viewport-safe dimensions.
+   Only the mobile overrides live here; desktop rules above are untouched.
+   ─────────────────────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  /* Re-enable grid hidden by the 640px rule */
+  .bg-grid {
+    display: block;
+  }
+
+  /* Column-edge verticals: replace gutter-calc with fixed inset */
+  .bg-v1 {
+    left: 16px;
+  }
+
+  .bg-v2 {
+    right: 16px;
+  }
+
+  /* ── Hero ── */
+  .bg-grid-hero .bg-red {
+    width: 28px;
+    height: 140px;
+  }
+
+  /* Accent lines that trace the red cell's right + bottom edges */
+  .bg-grid-hero .bg-vr {
+    left: 28px;
+  }
+
+  .bg-grid-hero .bg-hr {
+    width: 28px;
+  }
+
+  .bg-grid-hero .bg-yellow {
+    width: 24px;
+    height: 48px;
+  }
+
+  /* Accent line tracing yellow cell's left edge */
+  .bg-grid-hero .bg-vy {
+    right: 24px;
+  }
+
+  /* Blue bottom band: replace negative-calc left with 0;
+     width = calc(50vw - 80px) keeps it aligned with bg-vb */
+  .bg-grid-hero .bg-blue {
+    left: 0;
+    width: calc(50vw - 80px);
+    height: 48px;
+  }
+
+  /* ── Selected Work ── */
+  .bg-grid-work .bg-red {
+    width: 20px;
+  }
+
+  .bg-grid-work .bg-yellow {
+    width: 16px;
+  }
+
+  /* ── Writing ── */
+  .bg-grid-writing .bg-blue {
+    width: 20px;
+  }
+
+  /* Date-column separator goes negative at mobile — hide it */
+  .bg-grid-writing .bg-vdate {
+    display: none;
+  }
+}
+
 /* ── photo layout v2 ──────────────────────────────────────────────────────────
    New orientation-aware layout system. Each class drives one block type.
    Old ph-full-bleed / ph-pair-wrap / ph-stacked-wrap etc. remain but are unused.
