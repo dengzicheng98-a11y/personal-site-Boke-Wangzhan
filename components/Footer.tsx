@@ -3,9 +3,8 @@ export function Footer() {
     <footer className="foot">
       <span>© 2026 Dzs</span>
       <div className="group">
-        <a href="mailto:hi@dzs.studio">hi@dzs.studio</a>
+        <a href="mailto:dengzicheng98@gmail.com">dengzicheng98@gmail.com</a>
         <a href="#">GitHub ↗</a>
-        <a href="#">Twitter ↗</a>
       </div>
     </footer>
   )

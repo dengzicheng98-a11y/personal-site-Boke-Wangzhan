@@ -8,7 +8,7 @@ export function Nav() {
         <li><Link href="/#work">Work</Link></li>
         <li><Link href="/#writing">Writing</Link></li>
         <li><Link href="/photos">Photos</Link></li>
-        <li><Link href="/#about">About</Link></li>
+        <li><Link href="/about">About</Link></li>
       </ul>
     </nav>
   )
