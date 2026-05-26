@@ -17,7 +17,7 @@ export function SelectedWork({ projects }: { projects: Project[] }) {
       <div className="work-list">
         {projects.map((project) => (
           <a key={project.title} className="work-row" href={project.href}>
-            <Thumbnail style={project.thumbnail} />
+            <Thumbnail id={project.thumbnail} />
             <div className="work-meta">
               <h3>{project.title}</h3>
               <p>{project.description}</p>

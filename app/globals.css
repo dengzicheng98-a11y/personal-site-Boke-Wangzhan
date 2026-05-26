@@ -387,6 +387,13 @@ section.block + section.block {
   overflow: hidden;
   position: relative;
   border: 0.5px solid rgba(0, 0, 0, 0.05);
+  color: var(--ink-soft);
+}
+
+.proj-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 .thumb svg {
