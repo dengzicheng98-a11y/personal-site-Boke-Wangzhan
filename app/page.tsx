@@ -4,9 +4,10 @@ import { SelectedWork } from "@/components/SelectedWork";
 import { Writing } from "@/components/Writing";
 import { Footer } from "@/components/Footer";
 import { projects } from "@/data/projects";
-import { posts } from "@/data/posts";
+import { getAllPosts } from "@/lib/posts";
 
 export default function Home() {
+  const posts = getAllPosts();
   return (
     <main className="page">
       <Nav />

@@ -1,6 +1,7 @@
-import type { Post } from '@/data/posts'
+import Link from 'next/link'
+import type { PostMeta } from '@/lib/posts'
 
-export function Writing({ posts }: { posts: Post[] }) {
+export function Writing({ posts }: { posts: PostMeta[] }) {
   return (
     <section className="block" id="writing">
       <div className="bg-grid bg-grid-writing" aria-hidden="true">
@@ -17,10 +18,10 @@ export function Writing({ posts }: { posts: Post[] }) {
       </div>
       <div className="write-list">
         {posts.map((post) => (
-          <a key={post.title} className="write-row" href={post.href}>
+          <Link key={post.slug} className="write-row" href={`/writing/${post.slug}`}>
             <span className="write-title">{post.title}</span>
             <span className="write-date">{post.date}</span>
-          </a>
+          </Link>
         ))}
       </div>
     </section>

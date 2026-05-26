@@ -1153,3 +1153,144 @@ footer.foot .group {
     width: 88vw;
   }
 }
+
+/* ── prose (writing post) ─────────────────────────────────── */
+.prose {
+  padding-top: 32px;
+  padding-bottom: var(--pad-v);
+}
+
+.prose-back {
+  display: inline-block;
+  font-size: 13px;
+  color: var(--ink-soft);
+  text-decoration: none;
+  margin-bottom: 48px;
+  letter-spacing: 0.02em;
+}
+
+.prose-back:hover {
+  color: var(--ink);
+}
+
+.prose-header {
+  margin-bottom: 56px;
+  padding-bottom: 32px;
+  border-bottom: 0.5px solid var(--rule);
+}
+
+.prose-header h1 {
+  font-family: "New York", "Iowan Old Style", "Charter", Cambria, Georgia, serif;
+  font-size: 48px;
+  line-height: 1.08;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  margin: 16px 0 0;
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+.prose-excerpt {
+  font-size: 19px;
+  line-height: 1.55;
+  font-style: italic;
+  color: var(--ink-soft);
+  margin: 20px 0 0;
+}
+
+.prose h2 {
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  margin: 2.5em 0 0.75em;
+  color: var(--ink);
+}
+
+.prose h3 {
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  margin: 2em 0 0.6em;
+  color: var(--ink);
+}
+
+.prose p {
+  font-size: 17px;
+  line-height: 1.8;
+  color: var(--ink);
+  margin: 0 0 1.5em;
+}
+
+.prose a {
+  color: var(--ink);
+  text-underline-offset: 3px;
+}
+
+.prose strong {
+  font-weight: 600;
+}
+
+.prose ul,
+.prose ol {
+  padding-left: 1.5em;
+  margin: 0 0 1.5em;
+}
+
+.prose li {
+  font-size: 17px;
+  line-height: 1.8;
+  color: var(--ink);
+  margin-bottom: 0.4em;
+}
+
+.prose code {
+  font-family: var(--mono);
+  font-size: 13px;
+  background: var(--hover-surface);
+  border: 0.5px solid var(--rule);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.prose pre {
+  font-family: var(--mono);
+  font-size: 13px;
+  line-height: 1.65;
+  background: var(--hover-surface);
+  border: 0.5px solid var(--rule);
+  border-radius: 8px;
+  padding: 20px 24px;
+  overflow-x: auto;
+  margin: 0 0 1.5em;
+}
+
+.prose pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: inherit;
+}
+
+.prose blockquote {
+  border-left: 2px solid var(--rule);
+  padding-left: 20px;
+  margin: 0 0 1.5em;
+  color: var(--ink-soft);
+}
+
+.prose hr {
+  border: none;
+  border-top: 0.5px solid var(--rule);
+  margin: 2.5em 0;
+}
+
+@media (max-width: 640px) {
+  .prose-header h1 {
+    font-size: 34px;
+  }
+
+  .prose p,
+  .prose li {
+    font-size: 16px;
+  }
+}
