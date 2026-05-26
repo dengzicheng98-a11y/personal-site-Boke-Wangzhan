@@ -12,9 +12,9 @@ export function Writing({ posts }: { posts: PostMeta[] }) {
       </div>
       <div className="section-head">
         <h2>Writing</h2>
-        <a href="#" className="meta" style={{ textDecoration: 'none' }}>
+        <Link href="/writing" className="meta" style={{ textDecoration: 'none' }}>
           All posts ↗
-        </a>
+        </Link>
       </div>
       <div className="write-list">
         {posts.map((post) => (
