@@ -1,7 +1,7 @@
 ---
 title: Live2D 嘴型同步：从双队列到事件订阅
 date: May 20 2026
-excerpt: "调 Live2D 嘴型同步，发现 wavHandler 和 pygame.mixer 跨线程竞争是元凶；改用 DeviceSpeakerPlayEvent 订阅在播放线程同步触发，顺手解决了音频截断。"
+excerpt: "口型对不上、音频只播后半段、句首莫名一个「。」——记录把 Live2D 嘴型同步从独立队列改成订阅 DeviceSpeakerPlayEvent 后，三个 bug 一起消失的调试过程。"
 ---
 
 问题：嘴型不同步。音频已经在播，Live2D 的 ParamA 还没动；或者反过来，嘴动了声音才出。
