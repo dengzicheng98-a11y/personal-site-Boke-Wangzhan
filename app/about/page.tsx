@@ -5,7 +5,8 @@ import { ResumeSwitcher } from '@/components/ResumeSwitcher'
 import { resumes } from '@/data/resumes'
 
 export const metadata: Metadata = {
-  title: 'About — Dzs',
+  title: 'About',
+  description: '建筑设计背景，专注 AI 产品与全栈开发。',
 }
 
 export default function AboutPage() {

@@ -5,7 +5,8 @@ import { Footer } from '@/components/Footer'
 import { getAllPosts } from '@/lib/posts'
 
 export const metadata: Metadata = {
-  title: 'Writing — Dzs',
+  title: 'Writing',
+  description: '技术写作与调试记录。',
 }
 
 export default function WritingPage() {

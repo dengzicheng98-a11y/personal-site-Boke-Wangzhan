@@ -14,9 +14,17 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Dzs — Designer turned engineer",
-  description:
-    "Currently exploring interfaces for agents, ambient assistance, and the quieter edges of computing.",
+  metadataBase: new URL('https://personal-site-boke-wangzhan.vercel.app'),
+  title: {
+    default: '邓梓晟 | 作品集',
+    template: '%s | 邓梓晟',
+  },
+  description: '建筑设计背景，专注 AI 产品与全栈开发。作品、技术写作与摄影。',
+  openGraph: {
+    type: 'website',
+    locale: 'zh_CN',
+    siteName: '邓梓晟 作品集',
+  },
 };
 
 export default function RootLayout({
